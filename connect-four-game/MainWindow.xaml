@@ -1,0 +1,42 @@
+﻿<Window x:Class="connect_four_game.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:connect_four_game"
+        mc:Ignorable="d"
+        Title="Connect Four Game" Height="900" Width="1000" ResizeMode="CanMinimize">
+    <Grid x:Name="GameGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="75" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" FontSize="50" FontWeight="Bold" HorizontalAlignment="Right">
+                RED
+            </TextBlock>
+            <TextBlock x:Name="Score" Grid.Column="1" HorizontalAlignment="Center" FontSize="50" FontWeight="Bold">
+                0 : 0
+            </TextBlock>
+            <TextBlock Grid.Column="2" FontSize="50" FontWeight="Bold" HorizontalAlignment="Left">
+                YELLOW
+            </TextBlock>
+        </Grid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+            <Button x:Name="StartButton" Content="Start Game" FontSize="25" Padding="25,10" />
+        </StackPanel>
+
+        
+            
+
+    </Grid>
+</Window>
