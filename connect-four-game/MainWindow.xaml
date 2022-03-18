@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:connect_four_game"
         mc:Ignorable="d"
-        Title="Connect Four Game" Height="900" Width="1000" ResizeMode="CanMinimize">
+        Title="Connect Four Game" Height="900" Width="1000" ResizeMode="CanMinimize" KeyDown="Window_KeyDown">
     <Grid x:Name="GameGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="75" />
@@ -20,18 +20,18 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Grid.Column="0" FontSize="50" FontWeight="Bold" HorizontalAlignment="Right">
-                RED
+            <TextBlock x:Name="FirstPlayer" Grid.Column="0" FontSize="50" FontWeight="Bold" HorizontalAlignment="Right">
+                PLAYER
             </TextBlock>
             <TextBlock x:Name="Score" Grid.Column="1" HorizontalAlignment="Center" FontSize="50" FontWeight="Bold">
                 0 : 0
             </TextBlock>
-            <TextBlock Grid.Column="2" FontSize="50" FontWeight="Bold" HorizontalAlignment="Left">
-                YELLOW
+            <TextBlock x:Name="SecondPlayer" Grid.Column="2" FontSize="50" FontWeight="Bold" HorizontalAlignment="Left">
+                PLAYER
             </TextBlock>
         </Grid>
 
-        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Button x:Name="StartButton" Click="StartButton_Click" Content="Start Game" FontSize="25" Padding="25,10" />
         </StackPanel>
 
