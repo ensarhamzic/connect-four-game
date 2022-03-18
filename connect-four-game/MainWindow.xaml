@@ -32,7 +32,7 @@
         </Grid>
 
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Top">
-            <Button x:Name="StartButton" Content="Start Game" FontSize="25" Padding="25,10" />
+            <Button x:Name="StartButton" Click="StartButton_Click" Content="Start Game" FontSize="25" Padding="25,10" />
         </StackPanel>
 
         

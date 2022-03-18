@@ -8,7 +8,7 @@ namespace connect_four_game
 {
     internal class Table
     {
-        private Field[,] fields = new Field[7,6];
+        private Field[,] fields = new Field[6,7];
 
         public Field[,] Fields
         {
@@ -18,9 +18,9 @@ namespace connect_four_game
 
         public Table()
         {
-            for(int i = 0; i < 7; i++)
+            for(int i = 0; i < 6; i++)
             {
-                for(int j = 0; j < 6; j++)
+                for(int j = 0; j < 7; j++)
                 {
                     fields[i,j] = new Field(); // Initialization
                 }
