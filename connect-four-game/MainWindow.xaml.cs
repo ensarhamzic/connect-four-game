@@ -113,6 +113,178 @@ namespace connect_four_game
 
         private void HasWinner()
         {
+            int winner = 0;
+            for(int i = 5; i >= 0; i--) // Horizontal win
+            {
+                if(winner != 0)
+                    break;
+                for(int j = 0; j < 4; j++)
+                {
+                    if(table.Fields[i,j].Value == Field.Val.RED && table.Fields[i, j+1].Value == Field.Val.RED && table.Fields[i, j+2].Value == Field.Val.RED && table.Fields[i, j+3].Value == Field.Val.RED)
+                    {
+                        winner = 1;
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            Ellipse el1 = GameGrid.FindName($"r{i}c{j}") as Ellipse;
+                            Ellipse el2 = GameGrid.FindName($"r{i}c{j+1}") as Ellipse;
+                            Ellipse el3 = GameGrid.FindName($"r{i}c{j+2}") as Ellipse;
+                            Ellipse el4 = GameGrid.FindName($"r{i}c{j+3}") as Ellipse;
+                            el1.StrokeThickness = 15;
+                            el2.StrokeThickness = 15;
+                            el3.StrokeThickness = 15;
+                            el4.StrokeThickness = 15;
+                        });
+                        break;
+                    } else if(table.Fields[i, j].Value == Field.Val.YELLOW && table.Fields[i, j + 1].Value == Field.Val.YELLOW && table.Fields[i, j + 2].Value == Field.Val.YELLOW && table.Fields[i, j + 3].Value == Field.Val.YELLOW)
+                    {
+                        winner = 2;
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            Ellipse el1 = GameGrid.FindName($"r{i}c{j}") as Ellipse;
+                            Ellipse el2 = GameGrid.FindName($"r{i}c{j + 1}") as Ellipse;
+                            Ellipse el3 = GameGrid.FindName($"r{i}c{j + 2}") as Ellipse;
+                            Ellipse el4 = GameGrid.FindName($"r{i}c{j + 3}") as Ellipse;
+                            el1.StrokeThickness = 15;
+                            el2.StrokeThickness = 15;
+                            el3.StrokeThickness = 15;
+                            el4.StrokeThickness = 15;
+                        });
+                        break;
+                    }
+                }
+            }
+
+            for (int j = 0; j < 7; j++) // Vertical win
+            {
+                if (winner != 0)
+                    break;
+                for (int i = 5; i > 2; i--)
+                {
+                    if (table.Fields[i, j].Value == Field.Val.RED && table.Fields[i-1, j].Value == Field.Val.RED && table.Fields[i-2, j].Value == Field.Val.RED && table.Fields[i-3, j].Value == Field.Val.RED)
+                    {
+                        winner = 1;
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            Ellipse el1 = GameGrid.FindName($"r{i}c{j}") as Ellipse;
+                            Ellipse el2 = GameGrid.FindName($"r{i-1}c{j}") as Ellipse;
+                            Ellipse el3 = GameGrid.FindName($"r{i-2}c{j}") as Ellipse;
+                            Ellipse el4 = GameGrid.FindName($"r{i-3}c{j}") as Ellipse;
+                            el1.StrokeThickness = 15;
+                            el2.StrokeThickness = 15;
+                            el3.StrokeThickness = 15;
+                            el4.StrokeThickness = 15;
+                        });
+                        break;
+                    }
+                    else if (table.Fields[i, j].Value == Field.Val.YELLOW && table.Fields[i - 1, j].Value == Field.Val.YELLOW && table.Fields[i - 2, j].Value == Field.Val.YELLOW && table.Fields[i - 3, j].Value == Field.Val.YELLOW)
+                    {
+                        winner = 2;
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            Ellipse el1 = GameGrid.FindName($"r{i}c{j}") as Ellipse;
+                            Ellipse el2 = GameGrid.FindName($"r{i - 1}c{j}") as Ellipse;
+                            Ellipse el3 = GameGrid.FindName($"r{i - 2}c{j}") as Ellipse;
+                            Ellipse el4 = GameGrid.FindName($"r{i - 3}c{j}") as Ellipse;
+                            el1.StrokeThickness = 15;
+                            el2.StrokeThickness = 15;
+                            el3.StrokeThickness = 15;
+                            el4.StrokeThickness = 15;
+                        });
+                        break;
+                    }
+                }
+            }
+
+            for (int i = 5; i > 2; i--) // Down left - up right diagonal win
+            {
+                if (winner != 0)
+                    break;
+                for (int j = 0; j < 4; j++)
+                {
+                    if (table.Fields[i, j].Value == Field.Val.RED && table.Fields[i - 1, j + 1].Value == Field.Val.RED && table.Fields[i - 2, j + 2].Value == Field.Val.RED && table.Fields[i - 3, j + 3].Value == Field.Val.RED)
+                    {
+                        winner = 1;
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            Ellipse el1 = GameGrid.FindName($"r{i}c{j}") as Ellipse;
+                            Ellipse el2 = GameGrid.FindName($"r{i - 1}c{j + 1}") as Ellipse;
+                            Ellipse el3 = GameGrid.FindName($"r{i - 2}c{j + 2}") as Ellipse;
+                            Ellipse el4 = GameGrid.FindName($"r{i - 3}c{j + 3}") as Ellipse;
+                            el1.StrokeThickness = 15;
+                            el2.StrokeThickness = 15;
+                            el3.StrokeThickness = 15;
+                            el4.StrokeThickness = 15;
+                        });
+                        break;
+                    }
+                    else if (table.Fields[i, j].Value == Field.Val.YELLOW && table.Fields[i - 1, j + 1].Value == Field.Val.YELLOW && table.Fields[i - 2, j + 2].Value == Field.Val.YELLOW && table.Fields[i - 3, j + 3].Value == Field.Val.YELLOW)
+                    {
+                        winner = 2;
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            Ellipse el1 = GameGrid.FindName($"r{i}c{j}") as Ellipse;
+                            Ellipse el2 = GameGrid.FindName($"r{i - 1}c{j + 1}") as Ellipse;
+                            Ellipse el3 = GameGrid.FindName($"r{i - 2}c{j + 2}") as Ellipse;
+                            Ellipse el4 = GameGrid.FindName($"r{i - 3}c{j + 3}") as Ellipse;
+                            el1.StrokeThickness = 15;
+                            el2.StrokeThickness = 15;
+                            el3.StrokeThickness = 15;
+                            el4.StrokeThickness = 15;
+                        });
+                        break;
+                    }
+                }
+            }
+
+            for (int i = 5; i > 2; i--) // Up left - down right diagonal win
+            {
+                if (winner != 0)
+                    break;
+                for (int j = 6; j > 2; j--)
+                {
+                    if (table.Fields[i, j].Value == Field.Val.RED && table.Fields[i - 1, j - 1].Value == Field.Val.RED && table.Fields[i - 2, j - 2].Value == Field.Val.RED && table.Fields[i - 3, j - 3].Value == Field.Val.RED)
+                    {
+                        winner = 1;
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            Ellipse el1 = GameGrid.FindName($"r{i}c{j}") as Ellipse;
+                            Ellipse el2 = GameGrid.FindName($"r{i - 1}c{j - 1}") as Ellipse;
+                            Ellipse el3 = GameGrid.FindName($"r{i - 2}c{j - 2}") as Ellipse;
+                            Ellipse el4 = GameGrid.FindName($"r{i - 3}c{j - 3}") as Ellipse;
+                            el1.StrokeThickness = 15;
+                            el2.StrokeThickness = 15;
+                            el3.StrokeThickness = 15;
+                            el4.StrokeThickness = 15;
+                        });
+                        break;
+                    }
+                    else if (table.Fields[i, j].Value == Field.Val.YELLOW && table.Fields[i - 1, j - 1].Value == Field.Val.YELLOW && table.Fields[i - 2, j - 2].Value == Field.Val.YELLOW && table.Fields[i - 3, j - 3].Value == Field.Val.YELLOW)
+                    {
+                        winner = 2;
+                        this.Dispatcher.Invoke(() =>
+                        {
+                            Ellipse el1 = GameGrid.FindName($"r{i}c{j}") as Ellipse;
+                            Ellipse el2 = GameGrid.FindName($"r{i - 1}c{j - 1}") as Ellipse;
+                            Ellipse el3 = GameGrid.FindName($"r{i - 2}c{j - 2}") as Ellipse;
+                            Ellipse el4 = GameGrid.FindName($"r{i - 3}c{j - 3}") as Ellipse;
+                            el1.StrokeThickness = 15;
+                            el2.StrokeThickness = 15;
+                            el3.StrokeThickness = 15;
+                            el4.StrokeThickness = 15;
+                        });
+                        break;
+                    }
+                }
+            }
+
+
+            if (winner != 0)
+            {
+                MessageBox.Show($"Winner is player {winner}");
+                playerTurn = Turn.NONE;
+            }
+                
+
             // Winning logic
             // Increment score
             // Game end no winner message
@@ -122,6 +294,19 @@ namespace connect_four_game
         {
             playerTurn = Turn.FIRST;
             filled = 0;
+            for (int i = 0; i < 6; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        Ellipse el = GameGrid.FindName($"r{i}c{j}") as Ellipse;
+                        el.Fill = Brushes.Transparent;
+                        el.StrokeThickness = 2;
+                    });
+                    table.Fields[i, j] = new Field(); // Resetting
+                }
+            }
         }
     }
 }
