@@ -25,7 +25,7 @@ namespace connect_four_game
         public Player()
         {
             score = 0;
-            name = "Name";
+            name = "Player";
         }
 
         public Player(string name)

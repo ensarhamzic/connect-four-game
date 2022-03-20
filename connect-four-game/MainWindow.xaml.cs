@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -6,36 +7,46 @@ using System.Windows.Shapes;
 
 namespace connect_four_game
 {
-
     public partial class MainWindow : Window
     {
         private Table table;
         private Player player1;
         private Player player2;
-        private int filled;
+        private int filled; // Number of filled fields. Used to check if it is tie
         private bool game;
-        public enum Turn
+        public enum Turn 
         {
             FIRST,
             SECOND
         };
-        private Turn playerTurn;
+        private Turn playerTurn; // At one time, either it is turn for first or second player
         public MainWindow()
         {
             InitializeComponent();
             table = new Table();
-            player1 = new Player("Ensar");
-            player2 = new Player("Tarik");
+            player1 = new Player();
+            player2 = new Player();
+            playerTurn = Turn.FIRST; // First player starts first round
+            game = false; // game is not active
+            filled = 0; 
+            ShowNamesInputWindow();
+            DrawTable();
+            
+        }
+
+        private void ShowNamesInputWindow() // Opens new window, gets and shows player names
+        {
+            var window = new NamesForm();
+            window.ShowDialog(); // Show window and stop rendering until it closes
+            player1.Name = window.Player1Name;
+            player2.Name = window.Player2Name;
             FirstPlayer.Text = player1.Name;
             SecondPlayer.Text = player2.Name;
-            playerTurn = Turn.FIRST;
-            game = false;
-            filled = 0;
-            DrawTable();
         }
 
         private void DrawTable()
         {
+            // Logic to draw 6 * 7 table with ellipses
             StackPanel mainSP = new StackPanel();
             Grid.SetRow(mainSP, 1);
             mainSP.HorizontalAlignment = HorizontalAlignment.Center;
@@ -92,7 +103,9 @@ namespace connect_four_game
         {
             if (!game) return;
             Ellipse clickedEllipse = sender as Ellipse;
-            int row = int.Parse(clickedEllipse.Name[clickedEllipse.Name.Length - 1].ToString());
+            int row = int.Parse(clickedEllipse.Name[clickedEllipse.Name.Length - 1].ToString()); // Gets row number of clicked ellipse
+
+            // Searches next empty ellipse, register player turn and change turn to other player
             for (int i = 5; i >= 0; i--)
             {
                 if(table.Fields[i, row].Value == Field.Val.VOID)
@@ -117,7 +130,7 @@ namespace connect_four_game
                         playerTurn = Turn.FIRST;
                     }
                     filled++;
-                    if(filled > 6)
+                    if(filled > 6) // Player can win only after at least 7 filled ellipses (first player to reach 4th turn)
                     {
                         HasWinner();
                     }
@@ -127,11 +140,11 @@ namespace connect_four_game
             HighlightPlayer();
         }
 
-        private void HasWinner()
+        private void HasWinner() // Winning Logic
         {
-            int winner = 0;
-            int[,] winnerFields = new int[4, 2];
-            for(int i = 5; i >= 0; i--) // Horizontal win
+            int winner = 0; // 0 -> no winners, 1 -> 1st player wins, 2 -> 2nd player wins
+            int[,] winnerFields = new int[4, 2]; // Remembers positions of ellipses that won the round (used to then show visual feedback to players where the four ellipse sequence is)
+            for(int i = 5; i >= 0; i--) // Checks win in horizontal direction
             {
                 if(winner != 0)
                     break;
@@ -162,7 +175,7 @@ namespace connect_four_game
                 }
             }
 
-            for (int j = 0; j < 7; j++) // Vertical win
+            for (int j = 0; j < 7; j++) // Checks win in vertical direction
             {
                 if (winner != 0)
                     break;
@@ -194,7 +207,7 @@ namespace connect_four_game
                 }
             }
 
-            for (int i = 5; i > 2; i--) // Down left - up right diagonal win
+            for (int i = 5; i > 2; i--) // Checks win in diagonal downleft-upright direction
             {
                 if (winner != 0)
                     break;
@@ -227,7 +240,7 @@ namespace connect_four_game
                 }
             }
 
-            for (int i = 5; i > 2; i--) // Up left - down right diagonal win
+            for (int i = 5; i > 2; i--) // Checks win in diagonal upleft-downright direction
             {
                 if (winner != 0)
                     break;
@@ -260,24 +273,21 @@ namespace connect_four_game
                 }
             }
 
-            if (winner != 0)
+            if (winner != 0) // there is a winner
             {
-                for(int i = 0; i < 4; i++)
+                for(int i = 0; i < 4; i++) // marks ellipses that won round
                 {
                     Ellipse el = GameGrid.FindName($"r{winnerFields[i,0]}c{winnerFields[i, 1]}") as Ellipse;
                     el.StrokeThickness = 15;
                 }
-                game = false;
+                game = false; // game not active anymore
                 StartButton.IsEnabled = true;
-                if(winner == 1)
-                {
+                if(winner == 1) // Updates scores
                     player1.Score++;
-                } else
-                {
+                else
                     player2.Score++;
-                }
                 Score.Text = $"{player1.Score} : {player2.Score}";
-            } else if(filled == 42)
+            } else if(filled == 42) // Tie
             {
                 game = false;
                 StartButton.IsEnabled = true;
@@ -285,7 +295,7 @@ namespace connect_four_game
 
         }
 
-        private void StartButton_Click(object sender, RoutedEventArgs e)
+        private void StartButton_Click(object sender, RoutedEventArgs e) // Resets stuff and enables game
         {
             game = true;
             StartButton.IsEnabled = false;
@@ -300,13 +310,13 @@ namespace connect_four_game
                         el.Fill = Brushes.Transparent;
                         el.StrokeThickness = 2;
                     });
-                    table.Fields[i, j] = new Field(); // Resetting
+                    table.Fields[i, j] = new Field();
                 }
             }
             HighlightPlayer();
         }
 
-        private void HighlightPlayer()
+        private void HighlightPlayer() // Underline under name of player whose turn it is
         {
             if(playerTurn == Turn.FIRST)
             {
@@ -320,7 +330,7 @@ namespace connect_four_game
         }
 
         
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void Window_KeyDown(object sender, KeyEventArgs e) // Enabled playing with numbers on keyboard. Selects ellipse in row number that is pressed, and simulates left mouse click down event
         {
             bool turn = false;
             Ellipse el = new Ellipse();
@@ -368,7 +378,8 @@ namespace connect_four_game
 
             if (turn)
             {
-                MouseButtonEventArgs arg = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left);
+                // Simulating left mouse down click event on ellipse
+                MouseButtonEventArgs arg = new MouseButtonEventArgs(Mouse.PrimaryDevice, 0, MouseButton.Left); // Accepts 3 args: mouse, timestamp and mousebutton
                 arg.RoutedEvent = Ellipse.MouseLeftButtonDownEvent;
                 el.RaiseEvent(arg);
             }

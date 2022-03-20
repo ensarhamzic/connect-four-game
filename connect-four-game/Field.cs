@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace connect_four_game
 {
     internal class Field
     {
-        public enum Val
+        public enum Val // Field can have just 3 states
         {
             RED,
             YELLOW,
@@ -25,7 +21,7 @@ namespace connect_four_game
 
         public Field()
         {
-            value = Val.VOID;
+            value = Val.VOID; // Field is empty at the beginning
         }
     }
 }
